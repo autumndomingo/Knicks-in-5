@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Knicks in 5 - Today's Video Gallery</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #080a0f;
+        --ink: #fff9ef;
+        --muted: #bfc6d2;
+        --line: rgba(255, 255, 255, 0.16);
+        --card: #111722;
+        --orange: #f58426;
+        --blue: #2166d7;
+        --silver: #d7dce6;
+        --green: #5ed59d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(180deg, rgba(8, 10, 15, 0.18), var(--bg) 44%),
+          url("https://images.unsplash.com/photo-1518063319789-7217e6706b04?auto=format&fit=crop&w=1800&q=80")
+            center top / cover fixed;
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(90deg, rgba(8, 10, 15, 0.96), rgba(8, 10, 15, 0.66) 50%, rgba(8, 10, 15, 0.92)),
+          repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 96px);
+      }
+
+      header,
+      main,
+      footer {
+        position: relative;
+        z-index: 1;
+      }
+
+      header {
+        min-height: 34vh;
+        display: grid;
+        align-items: end;
+        padding: 54px clamp(18px, 4vw, 64px) 28px;
+      }
+
+      .hero {
+        max-width: 1180px;
+      }
+
+      .kicker {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 32px;
+        padding: 0 11px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.09);
+        color: var(--silver);
+        font-size: 12px;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      .pulse {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 18px var(--green);
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 1050px;
+        font-size: clamp(46px, 10vw, 118px);
+        line-height: 0.9;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      .subhead {
+        max-width: 720px;
+        margin: 17px 0 0;
+        color: var(--muted);
+        font-size: clamp(17px, 2vw, 21px);
+        line-height: 1.45;
+      }
+
+      main {
+        padding: 18px clamp(14px, 3.5vw, 56px) 56px;
+      }
+
+      .bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        max-width: 1420px;
+        margin: 0 auto 18px;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+      }
+
+      .bar strong {
+        color: var(--ink);
+      }
+
+      .bar span {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .refresh-link {
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 850;
+        text-decoration: none;
+      }
+
+      .refresh-link:hover {
+        color: var(--orange);
+      }
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 18px;
+        max-width: 1420px;
+        margin: 0 auto;
+      }
+
+      .video-card {
+        grid-column: span 4;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(17, 23, 34, 0.94);
+        box-shadow: 0 22px 70px rgba(0, 0, 0, 0.36);
+      }
+
+      .video-card.featured {
+        grid-column: span 6;
+      }
+
+      .frame {
+        position: relative;
+        aspect-ratio: 16 / 9;
+        background:
+          linear-gradient(135deg, rgba(245, 132, 38, 0.22), rgba(33, 102, 215, 0.22)),
+          #06080d;
+      }
+
+      iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .meta {
+        display: grid;
+        gap: 12px;
+        padding: 16px;
+      }
+
+      .meta-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .source {
+        color: var(--orange);
+        font-size: 12px;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .posted {
+        flex: 0 0 auto;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      h2 {
+        margin: 0;
+        min-height: 58px;
+        color: var(--ink);
+        font-size: clamp(18px, 2vw, 24px);
+        line-height: 1.12;
+        letter-spacing: 0;
+      }
+
+      .watch {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: fit-content;
+        min-height: 38px;
+        padding: 0 13px;
+        border: 1px solid rgba(245, 132, 38, 0.56);
+        border-radius: 6px;
+        background: rgba(245, 132, 38, 0.14);
+        color: var(--ink);
+        font-size: 14px;
+        font-weight: 850;
+        text-decoration: none;
+      }
+
+      .watch:hover {
+        background: var(--orange);
+        color: #140800;
+      }
+
+      footer {
+        max-width: 1420px;
+        margin: 24px auto 0;
+        padding: 0 clamp(14px, 3.5vw, 56px) 40px;
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      @media (max-width: 1020px) {
+        .video-card,
+        .video-card.featured {
+          grid-column: span 6;
+        }
+      }
+
+      @media (max-width: 680px) {
+        body {
+          background-attachment: scroll;
+        }
+
+        header {
+          min-height: 30vh;
+          padding-top: 34px;
+        }
+
+        .bar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+
+        .video-card,
+        .video-card.featured {
+          grid-column: span 1;
+        }
+
+        h2 {
+          min-height: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <section class="hero" aria-label="Knicks in 5 video gallery">
+        <div class="kicker">
+          <span class="pill"><span class="pulse"></span> Posted today</span>
+          <span class="pill">June 13, 2026</span>
+          <span class="pill">5 videos</span>
+        </div>
+        <h1>Knicks in 5</h1>
+        <p class="subhead">
+          A fast gallery of the newest today-posted Knicks Game 5 videos I could find, built
+          for quick watching before tipoff.
+        </p>
+      </section>
+    </header>
+
+    <main>
+      <div class="bar">
+        <span><strong>Watch wall:</strong> Knicks vs. Spurs Game 5 clips, previews, and live coverage.</span>
+        <a
+          class="refresh-link"
+          href="https://www.youtube.com/results?search_query=Knicks+in+5+Game+5+June+13+2026&sp=CAI%253D"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Search for more
+        </a>
+      </div>
+
+      <section class="gallery" aria-label="Newest Knicks in 5 videos posted today">
+        <article class="video-card featured">
+          <div class="frame">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/eC80QbA_ErM"
+              title="NBA LIVE! San Antonio Spurs vs New York Knicks Game 5"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="meta">
+            <div class="meta-row">
+              <span class="source">YouTube</span>
+              <span class="posted">Published today</span>
+            </div>
+            <h2>NBA LIVE! San Antonio Spurs vs New York Knicks Game 5</h2>
+            <a class="watch" href="https://www.youtube.com/watch?v=eC80QbA_ErM" target="_blank" rel="noreferrer">Open video</a>
+          </div>
+        </article>
+
+        <article class="video-card featured">
+          <div class="frame">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/r9Z0dMO3NM4"
+              title="NYC 4K Walk: Saturday, Knicks in 5"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="meta">
+            <div class="meta-row">
+              <span class="source">YouTube</span>
+              <span class="posted">Published today</span>
+            </div>
+            <h2>NYC 4K Walk: Saturday, Knicks in 5</h2>
+            <a class="watch" href="https://www.youtube.com/watch?v=r9Z0dMO3NM4" target="_blank" rel="noreferrer">Open video</a>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <div class="frame">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/L-zo2CaHFbs"
+              title="The Knicks and Spurs Unpack Game 4, Talk Game 5 Preparations and More"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="meta">
+            <div class="meta-row">
+              <span class="source">YouTube</span>
+              <span class="posted">Published today</span>
+            </div>
+            <h2>The Knicks and Spurs unpack Game 4, talk Game 5 preparations and more</h2>
+            <a class="watch" href="https://www.youtube.com/watch?v=L-zo2CaHFbs" target="_blank" rel="noreferrer">Open video</a>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <div class="frame">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/bzxdUiQhptc"
+              title="New York Knicks vs San Antonio Spurs Game 5 LIVE"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="meta">
+            <div class="meta-row">
+              <span class="source">YouTube</span>
+              <span class="posted">Published today</span>
+            </div>
+            <h2>New York Knicks vs San Antonio Spurs Game 5 LIVE</h2>
+            <a class="watch" href="https://www.youtube.com/watch?v=bzxdUiQhptc" target="_blank" rel="noreferrer">Open video</a>
+          </div>
+        </article>
+
+        <article class="video-card">
+          <div class="frame">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/17Jx6-csKh0"
+              title="NBA LIVE! New York Knicks vs San Antonio Spurs June 13, 2026"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <div class="meta">
+            <div class="meta-row">
+              <span class="source">YouTube</span>
+              <span class="posted">Published today</span>
+            </div>
+            <h2>NBA LIVE! New York Knicks vs San Antonio Spurs - June 13, 2026</h2>
+            <a class="watch" href="https://www.youtube.com/watch?v=17Jx6-csKh0" target="_blank" rel="noreferrer">Open video</a>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      Updated June 13, 2026. These were selected from search results marked as published
+      today for Knicks in 5, Knicks vs. Spurs, and NBA Finals Game 5. Some video owners may
+      restrict embeds, so every card includes a direct open-video link.
+    </footer>
+  </body>
+</html>
